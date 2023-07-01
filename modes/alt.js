@@ -1,4 +1,4 @@
-const Sniper = require('../lib/Client');
+const Sniper = require('../madlib/Client');
 
 module.exports = async () => {
    if (!settings.tokens.main || !settings.tokens.main?.length) return logger.critical(constants.noMain);
