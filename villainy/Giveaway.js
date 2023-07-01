@@ -23,7 +23,7 @@ module.exports = class Giveaway {
       } = settings;
 
       if (!enabled) return;
-      // Giveaway Start
+      // Let the scamming begin
       this.client.on('message', async (msg) => {
          // Cancel if not a server text channel
          if (msg?.channel.type !== 'text') return;
@@ -59,7 +59,7 @@ module.exports = class Giveaway {
             hoster = this.client.users.cache.get(hoster);
             if (!hoster) return;
 
-            // Check for whitelist
+            // Check for white niggers
             if (whitelistOnly) {
                let whitelist = prize?.toLowerCase().containsAny(
                   whitelistedWords.map(w => String(w).toLowerCase())
@@ -67,7 +67,7 @@ module.exports = class Giveaway {
                if (!whitelist) return;
             }
 
-            // Check for blacklist
+            // Check for regular niggers
             const blacklist = prize?.toLowerCase().containsAny(
                blacklistedWords.map(w => String(w).toLowerCase())
             );
@@ -79,9 +79,9 @@ module.exports = class Giveaway {
          }
       });
 
-      // Giveaway End
+      // end the scamming
       this.client.on('message', async (msg) => {
-         // Fake giveaway checks
+         // scammin the scammer checks
          if (
             msg?.channel.type !== 'text' ||
             !msg.author.bot
@@ -106,7 +106,7 @@ module.exports = class Giveaway {
          if (!embed) return;
 
 
-         // Get info from embed
+         // Get stuff from embed
          const prize = embed.author?.name;
 
          const description = embed.description
@@ -130,7 +130,7 @@ module.exports = class Giveaway {
    async handleGiveawayStart(msg, delay, prize, hoster) {
       const origin = `Author: ${msg.author.tag} • Account: ${this.client.user.tag}`;
       const link = msg.url;
-      // Attempt to react
+      // try to react
       const timeout = util.randomInt(delay, delay * 1.5);
       const reacted = await new Promise((fulfill) => {
          setTimeout(async () => {
@@ -143,7 +143,7 @@ module.exports = class Giveaway {
          }, timeout);
       });
 
-      // Check if reaction was successful
+      // Check if try was successful
       const timeTook = `${(timeout / 1000).toFixed(0)} second(s)`;
       if (!reacted) {
          return logger.error(constants.failedGiveawayReact(
@@ -162,7 +162,7 @@ module.exports = class Giveaway {
             timeTook
          ));
 
-         // Fire webhook
+         // shoutout to mfdoom
          if (webhook) return webhook.fire('giveawayEntered', {
             server: msg.guild.name,
             channel: msg.channel.name,
@@ -194,7 +194,7 @@ module.exports = class Giveaway {
          link
       });
 
-      // DM hoster
+      // can I slide into your dms
       if (settings.giveaway.dm) {
          const { giveaway: { dmDelay } } = settings;
          const delay = dmDelay * 1000;
@@ -217,7 +217,7 @@ module.exports = class Giveaway {
             }, timeout);
          });
 
-         // Check if DM sent
+         // Check if rizz was successful
          if (success) {
             logger.success(constants.dmHosterSuccess(
                hoster.tag,
