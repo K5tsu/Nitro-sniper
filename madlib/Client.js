@@ -1,7 +1,7 @@
 require('discord.js');
 const { Client } = require('discord.js-light');
 
-const Modules = require('../modules/index');
+const Modules = require('../villainy/index');
 const ModuleKeys = Object.keys(Modules);
 
 module.exports = class Sniper extends Client {
