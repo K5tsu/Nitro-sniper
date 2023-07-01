@@ -5,7 +5,6 @@ const fs = require('fs');
 
 const log = path.join(__dirname, '..', '..', 'sniper.log');
 
-// Delete previous log
 if (fs.existsSync(log)) {
    fs.unlinkSync(log);
 }
