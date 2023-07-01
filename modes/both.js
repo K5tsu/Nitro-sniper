@@ -1,7 +1,6 @@
 const Sniper = require('../madlib/Client');
 
 module.exports = async () => {
-   // Main
    let main = false;
    if (!settings.tokens.main || !settings.tokens.main?.length) return logger.critical(constants.noMain);
 
@@ -22,7 +21,6 @@ module.exports = async () => {
       }, util.randomInt(1e3, 3e3));
    });
 
-   // Alts
    let alts = 0;
    for (const token of util.cleanTokens()) {
       await new Promise((fulfill) => {
@@ -42,7 +40,6 @@ module.exports = async () => {
       });
    }
 
-   // Check if any logged in
    if (!main && alts <= 0) return;
 
    if (util.cleanTokens().length > 0 && alts <= 0) {
