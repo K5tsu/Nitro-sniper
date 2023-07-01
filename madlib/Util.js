@@ -8,17 +8,13 @@ module.exports = class Util {
    }
 
    static cleanTokens(tokens = settings.tokens.alts) {
-      // Set => Cleans duplicates => Revert back to array
       const cleaned = [...new Set(tokens)];
 
-      // Remove main token from alts if it exists
       if (cleaned.includes(settings.tokens.main)) {
          const index = cleaned.indexOf(settings.tokens.main);
 
          cleaned.splice(index, 1);
       }
-
-      // Clean empty strings & return
 
       return cleaned.filter(t => t !== '');
    }
