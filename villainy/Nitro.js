@@ -14,7 +14,7 @@ module.exports = class Sniper {
          invalid: 0,
          redeemed: 0,
          sniped: 0
-      }; // To be used in the dashboard
+      }; // I would have put some fucked up comments in here but I got stuff to do
 
       this.cooldown = null;
       this.snipedBucket = 0;
@@ -39,33 +39,26 @@ module.exports = class Sniper {
    }
 
    async handleMessage(msg, codes) {
-      // Check for blacklisted channels
       const blacklisted = settings.nitro?.blacklistedChannels;
       if (blacklisted?.includes(msg?.channel?.id)) return;
 
-      // Wait DM Timer
       if (msg?.channel?.type == 'dm' && settings.nitro.dm.delay > 0) {
          await util.sleep(settings.nitro.dm.delay * 1000);
          if (this.cooldown && this.cooldown > new Date()) return;
       }
-
-      // Define vars
       const author = msg.author.tag;
       const account = this.client.user.tag;
       const origin = `Author: ${author} • Account: ${account}`;
       const location = msg.guild ? `${msg.guild.name} > #${msg.channel.name}` : 'DMs';
 
-      // Run for each code
       for (let code of codes) {
          code = code.replace(this.regex.url, '');
 
-         // Check if cache contains code
          if (this.cache.indexOf(code) > -1) {
             logger.warn(constants.duplicateFound(code, location, author));
             continue;
          }
 
-         // Fire request
          phin({
             url: constants.redeemCodeURL(code),
             method: 'POST',
@@ -80,7 +73,6 @@ module.exports = class Sniper {
                payment_source_id: paymentSourceId
             })
          }, (err, res) => {
-            // Handle response
 
             if (res?.body?.retry_after) {
                const cooldown = moment().add(res.body?.retry_after, 'milliseconds');
@@ -109,7 +101,6 @@ module.exports = class Sniper {
                logger.error(constants.unknownResponse(code, location, author, time, res.body.message));
             }
 
-            // Handle bucket & cache
             this.cache.push(code);
             if (this.snipedBucket >= this.bucket) {
                const date = new Date();
